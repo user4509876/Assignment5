@@ -1,0 +1,44 @@
+class Game:
+    def __init__(a, n):
+        a.n = n
+        a.directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+    def valid(a, x, y, grid, game):
+        return 0 <= x < a.n and 0 <= y < a.n and (x, y) not in game
+
+    def full(a, game):
+        return len(game) == a.n * a.n
+
+    def direction(a, x, y, grid, game):
+        if a.full(game):
+            return 1 
+
+        total = 0
+        for dx, dy in a.directions:
+            x1, y1 = x + dx, y + dy
+            if a.valid(x1, y1, grid, game):
+                game.append((x1, y1))
+                grid[x1][y1] = True
+                total = total+ a.direction(x1, y1, grid, game)
+                game.pop()
+                grid[x1][y1] = False
+
+        return total
+
+    def total1(a, x0, y0):
+        grid = [[False] * a.n for _ in range(a.n)]
+        game = [(x0, y0)]
+        grid[x0][y0] = True
+        return a.direction(x0, y0, grid, game)
+
+
+if __name__ == "__main__":
+    n = int(input("Enter the size of the grid: "))
+    game = Game(n)
+    total = 0
+    for x0 in range(n):
+        for y0 in range(n):
+            ways = game.total1(x0, y0)
+            total += ways
+            print(f"Starting from cell ({x0}, {y0}), ways: {ways}")
+    print("Total number of ways to fill the grid with snake game:", total)
