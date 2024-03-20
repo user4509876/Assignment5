@@ -1,0 +1,40 @@
+import matplotlib.pyplot as plt
+
+def triangle(n):
+    x=(n * (n + 1)) // 2
+    return x
+
+def fractions1(n):
+    x = []
+    for k in range(1, n + 1):
+        num = triangle(k)
+        denom = (2 * k - 1) ** 2
+        x.append(num / denom)
+    return x
+
+def fractions2(n):
+    x = []
+    for k in range(1, n + 1):
+        num = triangle(k)
+        denom = (2 * k) ** 2
+        x.append(num / denom)
+    return x
+
+def plot(fractions1, fractions2):
+    x = range(1, len(fractions1) + 1)
+    plt.plot(x, fractions1, marker='o', label='Odd Values of n')
+    plt.plot(x, fractions2, marker='s', label='Even Values of n')
+    plt.xlabel('Position of Fraction in Sequence')
+    plt.ylabel('Fraction (Decimal)')
+    plt.title('Value of Fractions as For the First 20 Fractions in each Sequence')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+if __name__ == "__main__":
+    n = 20
+    frac1 = fractions1(n)
+    frac2 = fractions2(n)
+    print("Final Fraction (Odd n):", frac1[-1])
+    print("Final Fraction (Even n):", frac2[-1])
+    plot(frac1, frac2)
